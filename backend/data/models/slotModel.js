@@ -10,8 +10,8 @@ const slotSchema = new Schema({
   slotDate: {
     type: String, 
     require: true 
-  }
-})
+  }, 
+}, { versionKey: false })
 
 const slotModel = mongoose.model('user', slotSchema);
 

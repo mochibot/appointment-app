@@ -3,23 +3,40 @@ const slotModel = require('../models/slotModel');
 module.exports = {
   findAllSlots,
   findSlotById,
-  findSlotsByDate,
+  //findSlotsByDate,
   addSlot,
   updateSlot,
   deleteSlot
 }
 
 function findAllSlots(req, res) {
-  slotModel.find((error, data) => {
-    if (error) {
-      res.status(500).json({ 
-        message: 'error fetching slots',
-        error: error
-      });
-    } else {
-      res.status(200).json(data);     
-    }
-  })
+  const date = req.query.date;
+  
+  if (date) {
+    slotModel.find({ slotDate: date }, (error, data) => {
+      if (error) {
+        res.status(500).json({ 
+          message: 'testing',
+          error: error
+        });
+      } else if (data.length === 0) {
+        res.status(404).json('no slot found on this date')
+      } else {
+        res.status(200).json(data);   
+      }
+    })
+  } else {
+    slotModel.find((error, data) => {
+      if (error) {
+        res.status(500).json({ 
+          message: 'error fetching slots',
+          error: error
+        });
+      } else {
+        res.status(200).json(data);     
+      }
+    })
+  }
 }
 
 function findSlotById(req, res) {
@@ -35,23 +52,6 @@ function findSlotById(req, res) {
       res.status(404).json('no slot of such id exists')
     } else {
       res.status(200).json(data);    
-    }
-  })
-}
-
-function findSlotsByDate(req, res) {
-  const date = req.params.date;
-
-  slotModel.find({ slotDate: date }, (error, data) => {
-    if (error) {
-      res.status(500).json({ 
-        message: 'error fetching slots',
-        error: error
-      });
-    } else if (!data) {
-      res.status(404).json('no slot found on this date')
-    } else {
-      res.status(200).json(data);   
     }
   })
 }

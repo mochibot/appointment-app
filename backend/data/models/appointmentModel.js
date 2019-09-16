@@ -15,11 +15,11 @@ const appointmentSchema = new Schema({
     type: String, 
     require: true 
   },
-  slots: { 
+  slot: { 
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'slot'
   }
-})
+}, { versionKey: false })
 
 const appointmentModel = mongoose.model('appointment', appointmentSchema);
 
