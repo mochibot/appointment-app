@@ -9,10 +9,10 @@ const middlewares = require('../../middlewares');
 router.get('/', appointmentController.findAllAppointments);
 
 //add appointment
-router.post('/', middlewares.validateInput, appointmentController.addAppointment);
+router.post('/', middlewares.validateInput, middlewares.validateSlot, appointmentController.addAppointment);
 
 //update appointment
-router.put('/:id', middlewares.validateInput, appointmentController.editAppointment);
+router.put('/:id', middlewares.validateInput, middlewares.validateSlot, appointmentController.editAppointment);
 
 //delete appointment
 router.delete('/:id', appointmentController.deleteAppointment);

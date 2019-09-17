@@ -3,7 +3,6 @@ const slotModel = require('../models/slotModel');
 module.exports = {
   findAllSlots,
   findSlotById,
-  //findSlotsByDate,
   addSlot,
   updateSlot,
   deleteSlot
