@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 import { Form, Input, DatePicker, Switch, Button, Radio, } from 'antd';
 
-const AppointmentForm = () => {
+const AppointmentForm = (props) => {
   const [input, setInput] = useState({
     email: '',
     firstName: '',
@@ -15,7 +16,7 @@ const AppointmentForm = () => {
 
   const slotsAM = ['8:00-9:00', '9:00-10:00', '10:00-11:00', '11:00-12:00'];
   const slotsPM = ['1:00-2:00', '2:00-3:00', '3:00-4:00', '4:00-5:00'];
-  const baseUrl = 'http://localhost:5000'
+  const baseUrl = 'http://localhost:5000';
 
   const changeHandler = event => {
     setError('');
@@ -60,6 +61,7 @@ const AppointmentForm = () => {
             slotTime: '',
             slotDate: ''
           })
+          props.history.push('/');
         })
         .catch(error => {
           console.log('error adding appointment:', error);
@@ -68,7 +70,7 @@ const AppointmentForm = () => {
   }
 
   return (
-    <Form onSubmit={submitHandler}>
+    <Form className='appt-form' onSubmit={submitHandler}>
       <Input name='email' value={input.email} placeholder='Email' onChange={changeHandler} />
       <Input name='firstName' value={input.firstName} placeholder='First name' onChange={changeHandler} />
       <Input name='lastName' value={input.lastName} placeholder='Last name' onChange={changeHandler} />
@@ -89,4 +91,4 @@ const AppointmentForm = () => {
   )
 }
 
-export default AppointmentForm;
+export default withRouter(AppointmentForm);
